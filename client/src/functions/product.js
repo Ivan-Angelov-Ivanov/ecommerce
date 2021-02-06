@@ -47,3 +47,21 @@ export const getProducts = async (sort, order, page) => {
 export const getProductsCount = async () => {
   return await axios.get(`${process.env.REACT_APP_API}/products/total`);
 };
+
+export const productStar = async (productId, star, authtoken) => {
+  return await axios.put(
+    `${process.env.REACT_APP_API}/product/star/${productId}`,
+    { star },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
+
+export const getRelated = async (productId) => {
+  return await axios.get(
+    `${process.env.REACT_APP_API}/product/related/${productId}`
+  );
+};
