@@ -25,6 +25,7 @@ import AllProducts from "./pages/admin/product/AllProducts";
 import Product from "./pages/Product";
 import CategoryHome from "./pages/category/CategoryHome";
 import SubHome from "./pages/sub/SubHome";
+import Shop from "./pages/Shop";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
@@ -32,11 +33,9 @@ import { currentUser } from "./functions/auth";
 
 const App = () => {
   const dispatch = useDispatch();
-  const [didMount, setDidMount] = useState(false);
 
   // check firebase auth state
   useEffect(() => {
-    setDidMount(true);
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
@@ -58,7 +57,6 @@ const App = () => {
     });
 
     return () => {
-      setDidMount(false);
       unsubscribe();
     };
   }, [dispatch]);
@@ -95,6 +93,7 @@ const App = () => {
         <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryHome} />
         <Route exact path="/sub/:slug" component={SubHome} />
+        <Route exact path="/shop" component={Shop} />
       </Switch>
     </>
   );
