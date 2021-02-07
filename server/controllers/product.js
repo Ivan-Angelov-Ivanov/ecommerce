@@ -166,3 +166,181 @@ exports.listRelated = async (req, res) => {
 
   res.json(related);
 };
+
+// SEARCH / FILTER
+const handleQuery = async (req, res, query) => {
+  const products = await Product.find({ $text: { $search: query } })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .limit(12)
+    .exec();
+
+  res.json(products);
+};
+
+// filter by price
+const handlePrice = async (req, res, price) => {
+  try {
+    let products = await Product.find({
+      price: {
+        $gte: price[0],
+        $lte: price[1],
+      },
+    })
+      .populate("category", "_id name")
+      .populate("subs", "_id name")
+      .populate("postedBy", "_id name")
+      .limit(12)
+      .exec();
+
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// filter by category
+const handleCategory = async (req, res, category) => {
+  try {
+    let products = await Product.find({ category })
+      .populate("category", "_id name")
+      .populate("subs", "_id name")
+      .populate("postedBy", "_id name")
+      .limit(12)
+      .exec();
+
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// filter by rating
+const handleStar = (req, res, stars) => {
+  Product.aggregate([
+    {
+      $project: {
+        document: "$$ROOT",
+        floorAverage: {
+          $floor: {
+            $avg: "$ratings.star",
+          },
+        },
+      },
+    },
+    { $match: { floorAverage: stars } },
+  ])
+    .limit(12)
+    .exec((error, aggregates) => {
+      if (error) console.log("Aggregates error", error);
+      Product.find({ _id: aggregates })
+        .populate("category", "_id name")
+        .populate("subs", "_id name")
+        .populate("postedBy", "_id name")
+        .limit(12)
+        .exec((error, products) => {
+          if (error) console.log("Product aggregates error", error);
+          res.json(products);
+        });
+    });
+};
+
+// filter by sub categories
+const handleSub = async (req, res, sub) => {
+  let products = await Product.find({ subs: sub })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .limit(12)
+    .exec();
+
+  res.json(products);
+};
+
+// filter by shipping
+const handleShipping = async (req, res, shipping) => {
+  const products = await Product.find({ shipping })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .limit(12)
+    .exec();
+
+  res.json(products);
+};
+
+// filter by color
+const handleColor = async (req, res, color) => {
+  const products = await Product.find({ color })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .limit(12)
+    .exec();
+
+  res.json(products);};
+
+// filter by brand
+const handleBrand = async (req, res, brand) => {
+  const products = await Product.find({ brand })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .limit(12)
+    .exec();
+
+  res.json(products);};
+
+exports.searchFilters = async (req, res) => {
+  const {
+    query,
+    price,
+    category,
+    stars,
+    sub,
+    shipping,
+    color,
+    brand,
+  } = req.body;
+
+  if (query) {
+    console.log("Query", query);
+    await handleQuery(req, res, query);
+  }
+
+  if (price !== undefined) {
+    console.log("Price ==>", price);
+    await handlePrice(req, res, price);
+  }
+
+  if (category) {
+    console.log("Category --->", category);
+    await handleCategory(req, res, category);
+  }
+
+  if (stars) {
+    console.log("Stars --->", stars);
+    await handleStar(req, res, stars);
+  }
+
+  if (sub) {
+    console.log("Sub--->", sub);
+    await handleSub(req, res, sub);
+  }
+
+  if (shipping) {
+    console.log("Shipping--->", shipping);
+    await handleShipping(req, res, shipping);
+  }
+
+  if (color) {
+    console.log("Color--->", color);
+    await handleColor(req, res, color);
+  }
+
+  if (brand) {
+    console.log("Brand--->", brand);
+    await handleBrand(req, res, brand);
+  }
+};
