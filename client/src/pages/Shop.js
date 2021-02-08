@@ -53,8 +53,9 @@ const Shop = () => {
 
   // 1. load products by default on page load
   const loadAllProducts = () => {
-    getProductsByCount(12).then((p) => {
-      setProducts(p.data);
+    setLoading(true);
+    getProductsByCount(12).then((product) => {
+      setProducts(product.data);
       setLoading(false);
     });
   };
@@ -63,6 +64,9 @@ const Shop = () => {
   useEffect(() => {
     const delayed = setTimeout(() => {
       fetchProducts({ query: text });
+      if(!text) {
+        loadAllProducts();
+      }
     }, 300);
     return () => clearTimeout(delayed);
   }, [text]);
@@ -128,7 +132,7 @@ const Shop = () => {
     let justChecked = e.target.value;
     let foundInTheState = inTheState.indexOf(justChecked); // index or -1
 
-    // indexOf method ?? if not found returns -1 else return index [1,2,3,4,5]
+    // indexOf method - if not found returns -1 else return index [1,2,3,4,5]
     if (foundInTheState === -1) {
       inTheState.push(justChecked);
     } else {
@@ -201,6 +205,7 @@ const Shop = () => {
   const showBrands = () =>
     brands.map((b) => (
       <Radio
+        key={b}
         value={b}
         name={b}
         checked={b === brand}
@@ -230,6 +235,7 @@ const Shop = () => {
   const showColors = () =>
     colors.map((c) => (
       <Radio
+        key={c}
         value={c}
         name={c}
         checked={c === color}
@@ -411,7 +417,7 @@ const Shop = () => {
           {loading ? (
             <h4 className="text-danger">Loading...</h4>
           ) : (
-            <h4 className="text-danger">Products</h4>
+            <h4>Products</h4>
           )}
 
           {products.length < 1 && <p>No products found</p>}
