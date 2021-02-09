@@ -14,6 +14,9 @@ const {
   applyCouponToUserCart,
   createOrder,
   orders,
+  wishlist,
+  addToWishlist,
+  removeFromWishlist,
 } = require("../controllers/user");
 
 // routes
@@ -26,6 +29,11 @@ router.get("/user/orders", authCheck, orders);
 
 // coupon
 router.post("/user/cart/coupon", authCheck, applyCouponToUserCart);
+
+// wishlist
+router.post("/user/wishlist", authCheck, addToWishlist);
+router.get("/user/wishlist", authCheck, wishlist);
+router.put("/user/wishlist/:productId", authCheck, removeFromWishlist);
 
 // // route
 // router.get("/user", (req, res) => {
