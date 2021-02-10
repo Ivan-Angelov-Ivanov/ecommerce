@@ -8,6 +8,9 @@ Tools and Software used:
 -   VSCode
 -   Hyper
 -   Robo 3T
+-   Stripe
+-   Firebase
+-   Cloudinary
 
 ### Back-End:
 -   NodeJS
@@ -19,7 +22,6 @@ Tools and Software used:
 -   Bootstrap
 -   AntDesign
 -   Redux
--   Firebase
 
 Main idea of the project:
 -------------------------
