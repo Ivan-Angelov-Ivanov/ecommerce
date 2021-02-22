@@ -1,0 +1,579 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+Array [
+  <div
+    className="jumbotron text-danger text-center h1 font-weight-bold"
+  >
+    <div
+      className="Typewriter"
+      data-testid="typewriter-wrapper"
+    />
+  </div>,
+  <h4
+    className="text-center p-3 mt-5 mb-5 display-3 jumbotron"
+  >
+    New Arrivals
+  </h4>,
+  "0",
+  <div
+    className="container"
+  >
+    <div
+      className="row pb-5"
+    >
+      <div
+        className="ant-card ant-card-bordered col-md-4"
+      >
+        <div
+          className="ant-card-body"
+          style={Object {}}
+        >
+          <div
+            className="ant-skeleton ant-skeleton-active"
+          >
+            <div
+              className="ant-skeleton-content"
+            >
+              <h3
+                className="ant-skeleton-title"
+                style={
+                  Object {
+                    "width": "38%",
+                  }
+                }
+              />
+              <ul
+                className="ant-skeleton-paragraph"
+              >
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": "61%",
+                    }
+                  }
+                />
+              </ul>
+            </div>
+          </div>
+          ;
+        </div>
+      </div>
+      <div
+        className="ant-card ant-card-bordered col-md-4"
+      >
+        <div
+          className="ant-card-body"
+          style={Object {}}
+        >
+          <div
+            className="ant-skeleton ant-skeleton-active"
+          >
+            <div
+              className="ant-skeleton-content"
+            >
+              <h3
+                className="ant-skeleton-title"
+                style={
+                  Object {
+                    "width": "38%",
+                  }
+                }
+              />
+              <ul
+                className="ant-skeleton-paragraph"
+              >
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": "61%",
+                    }
+                  }
+                />
+              </ul>
+            </div>
+          </div>
+          ;
+        </div>
+      </div>
+      <div
+        className="ant-card ant-card-bordered col-md-4"
+      >
+        <div
+          className="ant-card-body"
+          style={Object {}}
+        >
+          <div
+            className="ant-skeleton ant-skeleton-active"
+          >
+            <div
+              className="ant-skeleton-content"
+            >
+              <h3
+                className="ant-skeleton-title"
+                style={
+                  Object {
+                    "width": "38%",
+                  }
+                }
+              />
+              <ul
+                className="ant-skeleton-paragraph"
+              >
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": "61%",
+                    }
+                  }
+                />
+              </ul>
+            </div>
+          </div>
+          ;
+        </div>
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <nav
+        className="col-md-4 offset-md-4 text-center pt-5 p-3"
+      >
+        <ul
+          className="ant-pagination"
+          style={Object {}}
+          unselectable="unselectable"
+        >
+          <li
+            aria-disabled={true}
+            className="ant-pagination-prev ant-pagination-disabled"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={null}
+            title="Previous Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={true}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="left"
+                className="anticon anticon-left"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="left"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={0}
+          >
+            <a
+              rel="nofollow"
+            >
+              0
+            </a>
+          </li>
+          <li
+            aria-disabled={true}
+            className="ant-pagination-next ant-pagination-disabled"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={null}
+            title="Next Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={true}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="right"
+                className="anticon anticon-right"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="right"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>,
+  <br />,
+  <br />,
+  <h4
+    className="text-center p- 3 mt-5 mb-5 display-3 jumbotron"
+  >
+    Best Sellers
+  </h4>,
+  <div
+    className="container"
+  >
+    <div
+      className="row pb-5"
+    >
+      <div
+        className="ant-card ant-card-bordered col-md-4"
+      >
+        <div
+          className="ant-card-body"
+          style={Object {}}
+        >
+          <div
+            className="ant-skeleton ant-skeleton-active"
+          >
+            <div
+              className="ant-skeleton-content"
+            >
+              <h3
+                className="ant-skeleton-title"
+                style={
+                  Object {
+                    "width": "38%",
+                  }
+                }
+              />
+              <ul
+                className="ant-skeleton-paragraph"
+              >
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": "61%",
+                    }
+                  }
+                />
+              </ul>
+            </div>
+          </div>
+          ;
+        </div>
+      </div>
+      <div
+        className="ant-card ant-card-bordered col-md-4"
+      >
+        <div
+          className="ant-card-body"
+          style={Object {}}
+        >
+          <div
+            className="ant-skeleton ant-skeleton-active"
+          >
+            <div
+              className="ant-skeleton-content"
+            >
+              <h3
+                className="ant-skeleton-title"
+                style={
+                  Object {
+                    "width": "38%",
+                  }
+                }
+              />
+              <ul
+                className="ant-skeleton-paragraph"
+              >
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": "61%",
+                    }
+                  }
+                />
+              </ul>
+            </div>
+          </div>
+          ;
+        </div>
+      </div>
+      <div
+        className="ant-card ant-card-bordered col-md-4"
+      >
+        <div
+          className="ant-card-body"
+          style={Object {}}
+        >
+          <div
+            className="ant-skeleton ant-skeleton-active"
+          >
+            <div
+              className="ant-skeleton-content"
+            >
+              <h3
+                className="ant-skeleton-title"
+                style={
+                  Object {
+                    "width": "38%",
+                  }
+                }
+              />
+              <ul
+                className="ant-skeleton-paragraph"
+              >
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+                <li
+                  style={
+                    Object {
+                      "width": "61%",
+                    }
+                  }
+                />
+              </ul>
+            </div>
+          </div>
+          ;
+        </div>
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <nav
+        className="col-md-4 offset-md-4 text-center pt-5 p-3"
+      >
+        <ul
+          className="ant-pagination"
+          style={Object {}}
+          unselectable="unselectable"
+        >
+          <li
+            aria-disabled={true}
+            className="ant-pagination-prev ant-pagination-disabled"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={null}
+            title="Previous Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={true}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="left"
+                className="anticon anticon-left"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="left"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={0}
+          >
+            <a
+              rel="nofollow"
+            >
+              0
+            </a>
+          </li>
+          <li
+            aria-disabled={true}
+            className="ant-pagination-next ant-pagination-disabled"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={null}
+            title="Next Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={true}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="right"
+                className="anticon anticon-right"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="right"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>,
+  <h4
+    className="text-center p-3 mt-5 mb-5 display-3 jumbotron"
+  >
+    Categories
+  </h4>,
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <h4
+        className="text-center"
+      >
+        Loading...
+      </h4>
+    </div>
+  </div>,
+  <h4
+    className="text-center p-3 mt-5 mb-5 display-3 jumbotron"
+  >
+    Sub Categories
+  </h4>,
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <h4
+        className="text-center"
+      >
+        Loading...
+      </h4>
+    </div>
+  </div>,
+]
+`;
