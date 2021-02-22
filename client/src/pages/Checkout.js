@@ -4,6 +4,7 @@ import {
   emptyUserCart,
   saveUserAddress,
   applyCoupon,
+  createCashOrderForUser,
 } from "../functions/user";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -22,7 +23,8 @@ const Checkout = ({ history }) => {
   const [discountError, setDiscountError] = useState("");
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, COD } = useSelector((state) => ({ ...state }));
+  const couponTrueOrFalse = useSelector((state) => state.coupon);
 
   useEffect(() => {
     getUserCart(user.token).then((res) => {
@@ -122,6 +124,38 @@ const Checkout = ({ history }) => {
     });
   };
 
+  const createCashOrder = () => {
+    createCashOrderForUser(user.token, COD, couponTrueOrFalse).then((res) => {
+      console.log("User cash order created", res);
+      // empty cart from redux, local storage, reset coupon, reset COD, redirect to user history
+      if (res.data.ok) {
+        // empty cart from local storage
+        if (typeof window !== undefined) localStorage.removeItem("cart");
+        // empty cart from redux
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: [],
+        });
+        // reset coupon to false
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false,
+        });
+        // empty cash on delivery
+        dispatch({
+          type: "CASH_ON_DELIVERY",
+          payload: false,
+        });
+        // empty cart from database
+        emptyUserCart(user.token);
+        //redirect
+        setTimeout(() => {
+          history.push("/user/history");
+        }, 2000);
+      }
+    });
+  };
+
   return (
     <div className="row">
       <div className="col-md-6">
@@ -150,19 +184,28 @@ const Checkout = ({ history }) => {
         <p>Cart Total: ${total}</p>
         {totalAfterDiscount > 0 && (
           <p className="bg-success text-light text-center m-2  p-2">
-            Discount applied! Total payable: 
-            ${totalAfterDiscount}
+            Discount applied! Total payable: ${totalAfterDiscount}
           </p>
         )}
         <div className="row">
           <div className="col-md-6">
-            <button
-              disabled={!addressSaved || !products.length}
-              className="btn btn-primary"
-              onClick={() => history.push("/payment")}
-            >
-              Place Order
-            </button>
+            {COD ? (
+              <button
+                disabled={!addressSaved || !products.length}
+                className="btn btn-primary"
+                onClick={createCashOrder}
+              >
+                Place Order
+              </button>
+            ) : (
+              <button
+                disabled={!addressSaved || !products.length}
+                className="btn btn-primary"
+                onClick={() => history.push("/payment")}
+              >
+                Place Order
+              </button>
+            )}
           </div>
           <div className="col-md-6">
             <button
