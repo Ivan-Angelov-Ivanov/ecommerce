@@ -19,14 +19,13 @@ const ProductCreateForm = ({
     price,
     categories,
     category,
-    subs,
+    brands,
+    brand,
     shipping,
     quantity,
     images,
     colors,
-    brands,
     color,
-    brand,
   } = values;
 
   return (
@@ -44,10 +43,11 @@ const ProductCreateForm = ({
 
       <div className="form-group">
         <label>Description</label>
-        <input
+        <textarea
+          rows = "15"
           type="text"
           name="description"
-          className="form-control"
+          className="form-control border"
           value={description}
           onChange={handleChange}
         />
@@ -101,18 +101,6 @@ const ProductCreateForm = ({
       </div>
 
       <div className="form-group">
-        <label>Brand</label>
-        <select name="brand" className="form-control" onChange={handleChange}>
-          <option>Select one</option>
-          {brands.map((brand) => (
-            <option key={brand} value={brand}>
-              {brand}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="form-group">
         <label>Category</label>
         <select
           name="category"
@@ -131,13 +119,12 @@ const ProductCreateForm = ({
 
       {showSub && (
         <div>
-          <label>Sub Categories</label>
+          <label>Brand</label>
           <Select
-            mode="multiple"
             style={{ width: "100%" }}
             placeholder="Please select"
-            value={subs}
-            onChange={(value) => setValues({ ...values, subs: value })}
+            value={brand}
+            onChange={(value) => setValues({ ...values, brand: value })}
           >
             {subOptions.length &&
               subOptions.map((sub) => (

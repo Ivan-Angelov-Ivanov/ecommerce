@@ -13,14 +13,12 @@ const initialState = {
   description: "",
   price: "",
   category: "",
-  subs: [],
+  brand: "",
   shipping: "",
   quantity: "",
   images: [],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
-  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
   color: "",
-  brand: "",
 };
 
 const ProductUpdate = ({ match, history }) => {
@@ -29,10 +27,9 @@ const ProductUpdate = ({ match, history }) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   const [subOptions, setSubOptions] = useState([]);
-  const [showSub, setShowSub] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([])
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [arrayOfSubs, setArrayOfSubs] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const { slug } = match.params;
@@ -46,9 +43,9 @@ const ProductUpdate = ({ match, history }) => {
     e.preventDefault();
     setLoading(true);
 
-    values.subs = arrayOfSubs;
     values.category = selectedCategory ? selectedCategory : values.category;
 
+    console.log(selectedImages)
     updateProduct(slug, values, user.token)
       .then((res) => {
         setLoading(false);
@@ -68,6 +65,8 @@ const ProductUpdate = ({ match, history }) => {
 
   const loadProduct = () => {
     getProduct(slug).then((product) => {
+      // load images
+      setSelectedImages(product.data.images)
       // load single product
       setValues({ ...values, ...product.data });
       // load single product category subs
@@ -75,11 +74,6 @@ const ProductUpdate = ({ match, history }) => {
         setSubOptions(res.data); // on first load, show default subs
       });
       // prepare array of sub category ids to show as default sub values in antd Select
-      let array = [];
-      product.data.subs.map((sub) => {
-        array.push(sub._id);
-      });
-      setArrayOfSubs((prev) => array); // required for antd Select to work
     });
   };
 
@@ -101,9 +95,6 @@ const ProductUpdate = ({ match, history }) => {
     if (values.category._id === e.target.value) {
       loadProduct();
     }
-
-    // clear all sub categories when changing category
-    setArrayOfSubs([]);
   };
 
   return (
@@ -121,6 +112,8 @@ const ProductUpdate = ({ match, history }) => {
             <FileUpload
               values={values}
               setValues={setValues}
+              selectedImages={selectedImages}
+              setSelectedImages={setSelectedImages}
               setLoading={setLoading}
             />
           </div>
@@ -132,8 +125,6 @@ const ProductUpdate = ({ match, history }) => {
             handleCategoryChange={handleCategoryChange}
             categories={categories}
             subOptions={subOptions}
-            arrayOfSubs={arrayOfSubs}
-            setArrayOfSubs={setArrayOfSubs}
             selectedCategory={selectedCategory}
           />
         </div>

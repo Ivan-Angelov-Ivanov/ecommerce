@@ -4,12 +4,12 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { Avatar, Badge } from "antd";
 
-const FileUpload = ({ values, setValues, setLoading }) => {
+const FileUpload = ({ selectedImages, setSelectedImages, values, setValues, setLoading }) => {
   const { user } = useSelector((state) => ({ ...state }));
   const fileUploadAndResize = (e) => {
     // resize
     let files = e.target.files;
-    let allUploadedFiles = values.images;
+    let allUploadedFiles = selectedImages;
     if (files) {
       setLoading(true);
       for (let i = 0; i < files.length; i++) {
@@ -17,7 +17,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           files[i],
           720,
           720,
-          "JPEG",
+          "PNG",
           100,
           0,
           (uri) => {
@@ -35,6 +35,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
                 console.log("Image response upload data", res);
                 setLoading(false);
                 allUploadedFiles.push(res.data);
+                setSelectedImages([ ...allUploadedFiles ]);
                 setValues({ ...values, images: allUploadedFiles });
               })
               .catch((error) => {
@@ -64,10 +65,11 @@ const FileUpload = ({ values, setValues, setLoading }) => {
       )
       .then((res) => {
         setLoading(false);
-        const { images } = values;
+        const images  = selectedImages;
         let filteredImages = images.filter((image) => {
           return image.public_id !== public_id;
         });
+        setSelectedImages([...filteredImages]);
         setValues({ ...values, images: filteredImages });
       })
       .catch((error) => {
@@ -80,8 +82,8 @@ const FileUpload = ({ values, setValues, setLoading }) => {
     <>
       <div className="row">
 
-        {values.images &&
-          values.images.map((image) => (
+        {selectedImages &&
+          selectedImages.map((image) => (
             <Badge
               count="X"
               key={image.public_id}

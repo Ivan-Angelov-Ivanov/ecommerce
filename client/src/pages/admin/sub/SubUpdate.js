@@ -2,16 +2,21 @@ import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { Select } from "antd";
 import { updateSub, getSub } from "../../../functions/sub";
 import { getCategories } from "../../../functions/category";
 import CategoryForm from "../../../components/forms/CategoryForm";
+import FileUpload from "../../../components/forms/FileUpload";
+
+const { Option } = Select;
 
 const SubUpdate = ({ match, history }) => {
   const { user } = useSelector((state) => ({ ...state }));
   const [name, setName] = useState("");
+  const [images, setImages] = useState([])
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [parent, setParent] = useState("");
+  const [parents, setParents] = useState([]);
 
   useEffect(() => {
     loadCategories();
@@ -23,14 +28,15 @@ const SubUpdate = ({ match, history }) => {
 
   const loadSub = () =>
     getSub(match.params.slug).then((sub) => {
-      setName(sub.data.name);
-      setParent(sub.data.parent);
+      setName(sub.data.sub.name);
+      setImages(sub.data.sub.images);
+      setParents(sub.data.sub.parents);
     });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    updateSub(match.params.slug, { name, parent }, user.token)
+    updateSub(match.params.slug, { name, images, parents }, user.token)
       .then((res) => {
         setLoading(false);
         setName("");
@@ -57,24 +63,33 @@ const SubUpdate = ({ match, history }) => {
             <h4>Update sub category</h4>
           )}
 
+          <div className="p-3">
+            <FileUpload
+              selectedImages={images}
+              setSelectedImages={setImages}
+              setLoading={setLoading}
+            />
+          </div>
+
           <div className="form-group">
             <label>Parent category</label>
-            <select
+            <Select
               name="category"
+              mode="multiple"
               className="form-control"
-              onChange={(e) => setParent(e.target.value)}
+              onChange={(value) => setParents(value)}
+              value={parents.map((parent) => parent.name)}
             >
               {categories.length > 0 &&
                 categories.map((category) => (
-                  <option
+                  <Option
                     key={category._id}
                     value={category._id}
-                    selected={category._id === parent}
                   >
                     {category.name}
-                  </option>
+                  </Option>
                 ))}
-            </select>
+            </Select>
           </div>
 
           <CategoryForm

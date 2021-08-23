@@ -33,12 +33,10 @@ const productSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Category",
     },
-    subs: [
-      {
-        type: ObjectId,
-        ref: "Sub",
-      },
-    ],
+    brand:  {
+      type: ObjectId,
+      ref: "Sub",
+    },
     quantity: Number,
     sold: {
       type: Number,
@@ -54,10 +52,6 @@ const productSchema = new mongoose.Schema(
     color: {
       type: String,
       enum: ["Black", "Brown", "Silver", "White", "Blue"],
-    },
-    brand: {
-      type: String,
-      enum: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
     },
     ratings: [
       {

@@ -10,17 +10,20 @@ const subSchema = new mongoose.Schema(
       minlength: [2, "Too Short"],
       maxlength: [32, "Too Long"],
     },
+    images: {
+      type: Array
+    },
     slug: {
       type: String,
       unique: true,
       lowercase: true,
       index: true,
     },
-    parent: {
+    parents: [{
       type: ObjectId,
       ref: "Category",
       required: true,
-    },
+    }],
   },
   { timestamps: true }
 );

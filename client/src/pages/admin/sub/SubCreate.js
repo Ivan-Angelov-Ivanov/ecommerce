@@ -6,16 +6,21 @@ import { Link } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { createSub, getSub, getSubs, removeSub } from "../../../functions/sub";
 import { getCategories } from "../../../functions/category";
+import { Select } from "antd";
 import CategoryForm from "../../../components/forms/CategoryForm";
 import LocalSearch from "../../../components/forms/LocalSearch";
+import FileUpload from "../../../components/forms/FileUpload";
+
+const { Option } = Select;
 
 const SubCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
   const [name, setName] = useState("");
+  const [images, setImages] = useState([])
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subs, setSubs] = useState([]);
-  const [category, setCategory] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
@@ -31,7 +36,7 @@ const SubCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    createSub({ name, parent: category }, user.token)
+    createSub({ name, images, parents: selectedCategories }, user.token)
       .then((res) => {
         setLoading(false);
         setName("");
@@ -80,21 +85,31 @@ const SubCreate = () => {
             <h4>Create sub category</h4>
           )}
 
+          <div className="p-3">
+            <FileUpload
+              selectedImages={images}
+              setSelectedImages={setImages}
+              setLoading={setLoading}
+            />
+          </div>
+
           <div className="form-group">
-            <label>Parent category</label>
-            <select
-              name="category"
+            <label>Parent categories</label>
+            <Select
+              name="categories"
+              mode="multiple"
               className="form-control"
-              onChange={(e) => setCategory(e.target.value)}
+              placeholder="Please Select"
+              onChange={(value) => setSelectedCategories(value)}
+              value={selectedCategories}
             >
-              <option>Please Select</option>
               {categories.length > 0 &&
                 categories.map((category) => (
-                  <option key={category._id} value={category._id}>
+                  <Option key={category._id} value={category._id}>
                     {category.name}
-                  </option>
+                  </Option>
                 ))}
-            </select>
+            </Select>
           </div>
 
           <CategoryForm

@@ -21,7 +21,7 @@ exports.listAll = async (req, res) => {
   let products = await Product.find({})
     .limit(parseInt(req.params.count))
     .populate("category")
-    .populate("subs")
+    .populate("brand")
     .sort([["createdAt", "desc"]])
     .exec();
   res.json(products);
@@ -42,7 +42,7 @@ exports.remove = async (req, res) => {
 exports.read = async (req, res) => {
   const product = await Product.findOne({ slug: req.params.slug })
     .populate("category")
-    .populate("subs")
+    .populate("brand")
     .exec();
 
   return res.json(product);
@@ -94,7 +94,7 @@ exports.list = async (req, res) => {
     const products = await Product.find({})
       .skip((currentPage - 1) * perPage)
       .populate("category")
-      .populate("subs")
+      .populate("brand")
       .sort([[sort, order]])
       .limit(perPage)
       .exec();
@@ -160,7 +160,7 @@ exports.listRelated = async (req, res) => {
   })
     .limit(3)
     .populate("category")
-    .populate("subs")
+    .populate("brand")
     .populate("postedBy")
     .exec();
 
@@ -171,7 +171,7 @@ exports.listRelated = async (req, res) => {
 const handleQuery = async (req, res, query) => {
   const products = await Product.find({ $text: { $search: query } })
     .populate("category", "_id name")
-    .populate("subs", "_id name")
+    .populate("brand", "_id name")
     .populate("postedBy", "_id name")
     .limit(12)
     .exec();
@@ -189,7 +189,7 @@ const handlePrice = async (req, res, price) => {
       },
     })
       .populate("category", "_id name")
-      .populate("subs", "_id name")
+      .populate("brand", "_id name")
       .populate("postedBy", "_id name")
       .limit(12)
       .exec();
@@ -205,7 +205,7 @@ const handleCategory = async (req, res, category) => {
   try {
     let products = await Product.find({ category })
       .populate("category", "_id name")
-      .populate("subs", "_id name")
+      .populate("brand", "_id name")
       .populate("postedBy", "_id name")
       .limit(12)
       .exec();
@@ -236,7 +236,7 @@ const handleStar = (req, res, stars) => {
       if (error) console.log("Aggregates error", error);
       Product.find({ _id: aggregates })
         .populate("category", "_id name")
-        .populate("subs", "_id name")
+        .populate("brand", "_id name")
         .populate("postedBy", "_id name")
         .limit(12)
         .exec((error, products) => {
@@ -246,23 +246,12 @@ const handleStar = (req, res, stars) => {
     });
 };
 
-// filter by sub categories
-const handleSub = async (req, res, sub) => {
-  let products = await Product.find({ subs: sub })
-    .populate("category", "_id name")
-    .populate("subs", "_id name")
-    .populate("postedBy", "_id name")
-    .limit(12)
-    .exec();
-
-  res.json(products);
-};
 
 // filter by shipping
 const handleShipping = async (req, res, shipping) => {
   const products = await Product.find({ shipping })
     .populate("category", "_id name")
-    .populate("subs", "_id name")
+    .populate("brand", "_id name")
     .populate("postedBy", "_id name")
     .limit(12)
     .exec();
@@ -274,7 +263,7 @@ const handleShipping = async (req, res, shipping) => {
 const handleColor = async (req, res, color) => {
   const products = await Product.find({ color })
     .populate("category", "_id name")
-    .populate("subs", "_id name")
+    .populate("brand", "_id name")
     .populate("postedBy", "_id name")
     .limit(12)
     .exec();
@@ -285,7 +274,7 @@ const handleColor = async (req, res, color) => {
 const handleBrand = async (req, res, brand) => {
   const products = await Product.find({ brand })
     .populate("category", "_id name")
-    .populate("subs", "_id name")
+    .populate("brand", "_id name")
     .populate("postedBy", "_id name")
     .limit(12)
     .exec();
@@ -298,7 +287,6 @@ exports.searchFilters = async (req, res) => {
     price,
     category,
     stars,
-    sub,
     shipping,
     color,
     brand,
@@ -322,11 +310,6 @@ exports.searchFilters = async (req, res) => {
   if (stars) {
     console.log("Stars --->", stars);
     await handleStar(req, res, stars);
-  }
-
-  if (sub) {
-    console.log("Sub--->", sub);
-    await handleSub(req, res, sub);
   }
 
   if (shipping) {

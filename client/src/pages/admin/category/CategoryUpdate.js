@@ -16,7 +16,7 @@ const CategoryUpdate = ({ history, match }) => {
 
   const loadCategory = () =>
     getCategory(match.params.slug).then((category) =>
-      setName(category.data.name)
+      setName(category.data.category.name)
     );
 
   const handleSubmit = (e) => {

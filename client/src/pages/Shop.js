@@ -25,10 +25,8 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState("");
-  const [subs, setSubs] = useState([]);
-  const [sub, setSub] = useState("");
-  const brands = ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"];
-  const [brand, setBrand] = useState("");
+  const [brands, setBrands] = useState([])
+  const [brandIds, setBrandIds] = useState([])
   const colors = ["Black", "Brown", "Silver", "White", "Blue"];
   const [color, setColor] = useState("");
   const [shipping, setShipping] = useState("");
@@ -42,8 +40,10 @@ const Shop = () => {
     // fetch categories
     getCategories().then((res) => setCategories(res.data));
     // fetch subcategories
-    getSubs().then((res) => setSubs(res.data));
+    loadSubs()
   }, []);
+
+  const loadSubs = () => getSubs().then((res) => setBrands(res.data))
 
   const fetchProducts = (arg) => {
     fetchProductsByFilter(arg).then((res) => {
@@ -73,7 +73,6 @@ const Shop = () => {
 
   // 3. load products based on price range
   useEffect(() => {
-    console.log("ok to request");
     fetchProducts({ price });
   }, [ok]);
 
@@ -85,10 +84,9 @@ const Shop = () => {
 
     // reset
     setCategoryIds([]);
+    setBrandIds([]);
     setPrice(value);
     setStar("");
-    setSub("");
-    setBrand("");
     setColor("");
     setShipping("");
     setTimeout(() => {
@@ -123,10 +121,9 @@ const Shop = () => {
     });
     setPrice([0, 0]);
     setStar("");
-    setSub("");
-    setBrand("");
     setColor("");
     setShipping("");
+    setBrandIds([]);
     // console.log(e.target.value);
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -138,6 +135,9 @@ const Shop = () => {
     } else {
       // if found pull out one item from index
       inTheState.splice(foundInTheState, 1);
+      if(inTheState.length === 0) {
+        loadAllProducts()
+      }
     }
 
     setCategoryIds(inTheState);
@@ -154,9 +154,8 @@ const Shop = () => {
     });
     setPrice([0, 0]);
     setCategoryIds([]);
+    setBrandIds([]);
     setStar(num);
-    setSub("");
-    setBrand("");
     setColor("");
     setShipping("");
     fetchProducts({ stars: num });
@@ -172,52 +171,24 @@ const Shop = () => {
     </div>
   );
 
-  // 6. show products by sub category
-  const showSubs = () =>
-    subs.map((s) => (
-      <div
-        key={s._id}
-        onClick={() => handleSub(s)}
-        className="p-1 m-1 badge badge-secondary"
-        style={{ cursor: "pointer" }}
-      >
-        {s.name}
-      </div>
-    ));
-
-  const handleSub = (sub) => {
-    // console.log("SUB", sub);
-    setSub(sub);
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: { text: "" },
-    });
-    setPrice([0, 0]);
-    setCategoryIds([]);
-    setStar("");
-    setBrand("");
-    setColor("");
-    setShipping("");
-    fetchProducts({ sub });
-  };
-
   // 7. show products based on brand name
   const showBrands = () =>
     brands.map((b) => (
-      <Radio
-        key={b}
-        value={b}
-        name={b}
-        checked={b === brand}
-        onChange={handleBrand}
-        className="pb-1 pl-4 pr-4"
-      >
-        {b}
-      </Radio>
+      <div key={b._id}>
+        <Checkbox
+          onChange={handleBrand}
+          className="pb-2 pl-4 pr-4"
+          value={b._id}
+          name="category"
+          checked={brandIds.includes(b._id)}
+        >
+          {b.name}
+        </Checkbox>
+        <br />
+      </div>
     ));
 
   const handleBrand = (e) => {
-    setSub("");
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
@@ -226,9 +197,25 @@ const Shop = () => {
     setCategoryIds([]);
     setStar("");
     setColor("");
-    setBrand(e.target.value);
     setShipping("");
-    fetchProducts({ brand: e.target.value });
+
+    let inTheState = [...brandIds];
+    let justChecked = e.target.value;
+    let foundInTheState = inTheState.indexOf(justChecked); // index or -1
+
+    // indexOf method - if not found returns -1 else return index [1,2,3,4,5]
+    if (foundInTheState === -1) {
+      inTheState.push(justChecked);
+    } else {
+      // if found pull out one item from index
+      inTheState.splice(foundInTheState, 1);
+      if(inTheState.length === 0) {
+        loadAllProducts()
+      }
+    }
+
+    setBrandIds(inTheState);
+    fetchProducts({ brand: inTheState });
   };
 
   // 8. show products based on color
@@ -247,7 +234,6 @@ const Shop = () => {
     ));
 
   const handleColor = (e) => {
-    setSub("");
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
@@ -255,7 +241,7 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
-    setBrand("");
+    setBrandIds([]);
     setColor(e.target.value);
     setShipping("");
     fetchProducts({ color: e.target.value });
@@ -285,7 +271,6 @@ const Shop = () => {
   );
 
   const handleShippingchange = (e) => {
-    setSub("");
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
@@ -293,7 +278,7 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
-    setBrand("");
+    setBrandIds([]);
     setColor("");
     setShipping(e.target.value);
     fetchProducts({ shipping: e.target.value });
@@ -353,20 +338,6 @@ const Shop = () => {
               }
             >
               <div style={{ maringTop: "-10px" }}>{showStars()}</div>
-            </SubMenu>
-
-            {/* sub category */}
-            <SubMenu
-              key="4"
-              title={
-                <span className="h6">
-                  <DownSquareOutlined /> Sub Categories
-                </span>
-              }
-            >
-              <div style={{ maringTop: "-10px" }} className="pl-4 pr-4">
-                {showSubs()}
-              </div>
             </SubMenu>
 
             {/* brands */}

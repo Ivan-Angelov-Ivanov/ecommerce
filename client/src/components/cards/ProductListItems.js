@@ -5,10 +5,9 @@ const ProductListItems = ({ product }) => {
   const {
     price,
     category,
-    subs,
+    brand,
     shipping,
     color,
-    brand,
     quantity,
     sold,
   } = product;
@@ -31,18 +30,16 @@ const ProductListItems = ({ product }) => {
           </Link>
         </li>
       )}
-      {subs && (
+      {brand && (
         <li className="list-group-item">
-          Sub Categories{" "}
-          {subs.map((sub) => (
+          Brand{" "}
             <Link
-              key={sub._id}
-              to={`/sub/${sub.slug}`}
+              key={brand._id}
+              to={`/sub/${brand.slug}`}
               className="label label-default label-pill pull-xs-right"
             >
-              {sub.name}
+              {brand.name}
             </Link>
-          ))}
         </li>
       )}
       <li className="list-group-item">
@@ -55,12 +52,6 @@ const ProductListItems = ({ product }) => {
         Color{" "}
         <span className="label label-default label-pill pull-xs-right">
           {color}
-        </span>
-      </li>
-      <li className="list-group-item">
-        Brand{" "}
-        <span className="label label-default label-pill pull-xs-right">
-          {brand}
         </span>
       </li>
       <li className="list-group-item">
