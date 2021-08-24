@@ -16,7 +16,7 @@ const Invoice = ({ order }) => {
           ~ {new Date().toLocaleString()} ~
         </Text>
         <Text style={styles.title}>Order Invoice</Text>
-        <Text style={styles.author}>React Redux Ecommerce</Text>
+        <Text style={styles.author}>Ecommerce</Text>
         <Text style={styles.subtitle}>Order Summary</Text>
 
         <Table>
@@ -51,7 +51,7 @@ const Invoice = ({ order }) => {
           {"\n"}
           <Text>Order Status: {"   "} {order.orderStatus}</Text>
           {"\n"}
-          <Text>Total Paid: {"       "} {order.paymentIntent.amount}</Text>
+          <Text>Total Paid: {"       "} {order.paymentIntent.amount}$</Text>
           {"\n"}
         </Text>
         <Text style={styles.footer}>~ Thank you for shopping with us ~</Text>

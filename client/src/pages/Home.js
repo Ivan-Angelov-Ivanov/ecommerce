@@ -4,6 +4,8 @@ import NewArrivals from "../components/home/NewArrivals";
 import BestSellers from "../components/home/BestSellers";
 import CategoryList from "../components/category/CategoryList";
 import SubList from "../components/sub/SubList";
+import Advantages from "../components/cards/Advantages"
+
 
 const Home = () => {
   return (
@@ -11,14 +13,15 @@ const Home = () => {
       <div className="jumbotron text-danger text-center h1 font-weight-bold">
         <Jumbotron text={["Latest Products", "New Arrivals", "Best Sellers"]} />
       </div>
+      
+      <Advantages />
 
       <h4 className="text-center p-3 mt-5 mb-5 display-3 jumbotron">
         New Arrivals
       </h4>
       <NewArrivals />
-      <br />
-      <br />
-      <h4 className="text-center p- 3 mt-5 mb-5 display-3 jumbotron">
+      
+      <h4 className="text-center p-3 mt-5 mb-5 display-3 jumbotron">
         Best Sellers
       </h4>
       <BestSellers />

@@ -41,7 +41,8 @@ const ProductUpdateForm = ({
 
       <div className="form-group">
         <label>Description</label>
-        <input
+        <textarea
+          rows = "15"
           type="text"
           name="description"
           className="form-control"

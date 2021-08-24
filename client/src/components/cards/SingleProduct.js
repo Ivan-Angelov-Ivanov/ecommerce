@@ -62,7 +62,6 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   const handleAddToWishlist = (e) => {
     e.preventDefault();
     addToWishlist(product._id, user.token).then((res) => {
-      console.log("Added to Wishlsit: ", res.data);
       toast.success("Added to Wishlist!");
       history.push("/user/wishlist");
     });
@@ -70,12 +69,12 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
   return (
     <>
-      <div className="col-md-7">
+      <div className="card p-3 m-4 col-md-6">
         {images && images.length ? (
           <Carousel showArrows={true} autoPlay infiniteLoop>
             {images &&
               images.map((image) => (
-                <img alt={title} src={image.url} key={image.public_id} />
+                <img className="bg-white" alt={title} src={image.url} key={image.public_id} style={{objectFit: "contain"}} />
               ))}
           </Carousel>
         ) : (
@@ -85,7 +84,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         )}
 
         <Tabs type="card" defaultActiveKey="1">
-          <TabPane tab="Description" key="1">
+          <TabPane style={{whiteSpace: "pre-wrap"}} tab="Description" key="1">
             {description && description}
           </TabPane>
           <TabPane tab="More" key="2">
@@ -94,8 +93,8 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         </Tabs>
       </div>
 
-      <div className="col-md-5">
-        <h1 className="bg-info p-3 rounded">{title}</h1>
+      <div className="card p-3 m-4 col-md-5">
+        <h1 className="bg-info p-3 rounded-top">{title}</h1>
         {product && product.ratings && product.ratings.length > 0 ? (
           showAverage(product)
         ) : (
