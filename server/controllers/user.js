@@ -125,6 +125,10 @@ exports.createOrder = async (req, res) => {
     orderedBy: user._id,
   }).save();
 
+  let tokens = Math.round((newOrder.paymentIntent.amount * 0.3) / 100) + user.tokens
+
+  await User.findOneAndUpdate({email: req.user.email}, {tokens}).exec()
+
   // decrement quantity, increment sold
   let bulkOption = products.map((item) => {
     return {

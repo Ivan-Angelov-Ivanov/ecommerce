@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Card } from "antd";
 import { DollarOutlined, CheckOutlined } from "@ant-design/icons";
 import laptop from "../images/laptop-pic-1.jpg";
+import { useHistory } from "react-router-dom";
 
 const StripeCheckout = ({ history }) => {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ const StripeCheckout = ({ history }) => {
 
   const stripe = useStripe();
   const elements = useElements();
+
+  const currentHistory = useHistory()
 
   useEffect(() => {
     console.log(coupon);
@@ -78,6 +81,10 @@ const StripeCheckout = ({ history }) => {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      setTimeout(() => {
+        currentHistory.push("/");
+        window.location.reload()
+      }, 5000);
     }
   };
 
@@ -166,6 +173,9 @@ const StripeCheckout = ({ history }) => {
         <p className={succeeded ? "result-message" : "result-message hidden"}>
           Payment Successful.{" "}
           <Link to="/user/history">See it in your purchase history.</Link>
+          <br />
+          <br />
+          Redirecting to Home page in 5 seconds...
         </p>
       </form>
     </>

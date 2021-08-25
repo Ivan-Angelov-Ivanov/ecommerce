@@ -14,6 +14,7 @@ import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Search from "../forms/Search";
+import token from "../../images/token-image.png"
 
 const { SubMenu, Item } = Menu;
 
@@ -28,6 +29,7 @@ const Header = () => {
   const handleClick = (e) => {
     // console.log(e.key);
     setCurrent(e.key);
+    console.log(user)
   };
 
   const logout = () => {
@@ -41,15 +43,15 @@ const Header = () => {
 
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      <Item key="home" icon={<AppstoreOutlined />}>
+      <Item className="float-left" key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
       </Item>
 
-      <Item key="shop" icon={<ShoppingOutlined />}>
+      <Item className="float-left" key="shop" icon={<ShoppingOutlined />}>
         <Link to="/shop">Shop</Link>
       </Item>
 
-      <Item key="cart" icon={<ShoppingCartOutlined />}>
+      <Item className="float-left" key="cart" icon={<ShoppingCartOutlined />}>
         <Link to="/cart">
           <Badge count={cart.length} offset={[9, 0]}>
             Cart
@@ -70,35 +72,42 @@ const Header = () => {
       )}
 
       {user && (
-        <SubMenu
-          icon={<SettingOutlined />}
-          title={user.email && user.email.split("@")[0]}
-          className="float-right"
-        >
-          {user && user.role === "subscriber" && (
-            <Item>
-              <Link to="/user/history">Profile</Link>
-            </Item>
-          )}
-
-          {user && user.role === "admin" && (
-            <>
+        <>
+          <SubMenu
+            icon={<SettingOutlined />}
+            title={user.email && user.email.split("@")[0]}
+            className="float-right"
+          >
+            {user && user.role === "subscriber" && (
               <Item>
                 <Link to="/user/history">Profile</Link>
               </Item>
-              <Item>
-                <Link to="/admin/dashboard">Dashboard</Link>
-              </Item>
-            </>
-          )}
+            )}
 
-          <Item icon={<LogoutOutlined />} onClick={logout}>
-            Logout
-          </Item>
-        </SubMenu>
+            {user && user.role === "admin" && (
+              <>
+                <Item>
+                  <Link to="/user/history">Profile</Link>
+                </Item>
+                <Item>
+                  <Link to="/admin/dashboard">Dashboard</Link>
+                </Item>
+              </>
+            )}
+
+            <Item icon={<LogoutOutlined />} onClick={logout}>
+              Logout
+            </Item>
+          </SubMenu>
+
+          <div className="float-right border-right border-left px-2 rounded">
+            <img className="pr-2" alt="token" src={token} height="25px" />
+            <span className="b-1 font-weight-bold text-info" >{user.tokens}</span>
+          </div>
+        </>
       )}
 
-      <span className="float-right p-1">
+      <span className="float-left p-1">
         <Search />
       </span>
     </Menu>
