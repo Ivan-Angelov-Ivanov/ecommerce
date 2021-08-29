@@ -151,6 +151,7 @@ const Checkout = ({ history }) => {
 
   const applyDiscountCoupon = () => {
     let allAppliedCoupons = coupons;
+
     if (allAppliedCoupons.includes(coupon)) {
       setDiscountError("Coupon already applied!");
       return;

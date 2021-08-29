@@ -87,7 +87,12 @@ exports.applyCouponToUserCart = async (req, res) => {
     return res.json({
       error: "Invalid coupon",
     });
+  } else if (validCoupon.expiry < Date.now()) {
+    return res.json({
+      error: "Coupon is already expired",
+    });
   }
+
   console.log("Valid Coupon", validCoupon);
 
   const user = await User.findOne({ email: req.user.email }).exec();

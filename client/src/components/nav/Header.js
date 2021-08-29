@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Menu, Badge } from "antd";
 import {
   AppstoreOutlined,
-  SettingOutlined,
+  ProfileOutlined,
   UserOutlined,
+  DashboardOutlined,
   UserAddOutlined,
   LogoutOutlined,
   ShoppingOutlined,
@@ -15,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Search from "../forms/Search";
 import token from "../../images/token-image.png";
+import defaultPfp from "../../images/default-profile-image.jpg";
 
 const { SubMenu, Item } = Menu;
 
@@ -29,7 +31,8 @@ const Header = () => {
   const handleClick = (e) => {
     // console.log(e.key);
     setCurrent(e.key);
-    console.log(user);
+    console.log(user.avatar);
+    console.log(defaultPfp);
   };
 
   const logout = () => {
@@ -74,9 +77,31 @@ const Header = () => {
       {user && (
         <>
           <SubMenu
-            icon={<SettingOutlined />}
-            title={user.email && user.email.split("@")[0]}
-            className="float-right"
+            icon={
+              user.avatar === undefined || user.avatar === null ? (
+                <img
+                  alt="avatar"
+                  src={defaultPfp}
+                  className="p-1 rounded-circle mr-1"
+                  height="40px"
+                />
+              ) : (
+                <img
+                  alt="avatar"
+                  src={user.avatar}
+                  className="p-1 rounded-circle mr-1"
+                  height="40px"
+                />
+              )
+            }
+            title={
+              user.email && (
+                <span className="font-weight-bold">
+                  {user.email.split("@")[0]}
+                </span>
+              )
+            }
+            className="float-right ml-2"
           >
             {user && user.role === "subscriber" && (
               <Item>
@@ -86,10 +111,10 @@ const Header = () => {
 
             {user && user.role === "admin" && (
               <>
-                <Item>
+                <Item icon={<ProfileOutlined />}>
                   <Link to="/user/history">Profile</Link>
                 </Item>
-                <Item>
+                <Item icon={<DashboardOutlined />}>
                   <Link to="/admin/dashboard">Dashboard</Link>
                 </Item>
               </>

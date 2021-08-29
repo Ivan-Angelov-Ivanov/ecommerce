@@ -104,7 +104,7 @@ const CreateCoupon = () => {
               <br />
               <DatePicker
                 className="form-control"
-                selected={new Date()}
+                selected={expiry}
                 value={expiry}
                 required
                 onChange={(date) => setExpiry(date)}

@@ -22,15 +22,15 @@ import SubUpdate from "./pages/admin/sub/SubUpdate";
 import ProductCreate from "./pages/admin/product/ProductCreate";
 import ProductUpdate from "./pages/admin/product/ProductUpdate";
 import AllProducts from "./pages/admin/product/AllProducts";
-import CreateCoupon from './pages/admin/coupon/CreateCoupon'
+import CreateCoupon from "./pages/admin/coupon/CreateCoupon";
 import Product from "./pages/Product";
 import CategoryHome from "./pages/category/CategoryHome";
 import SubHome from "./pages/sub/SubHome";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import SideDrawer from "./components/drawer/SideDrawer";
-import Checkout from './pages/Checkout'
-import Payment from './pages/Payment'
+import Checkout from "./pages/Checkout";
+import Payment from "./pages/Payment";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
@@ -50,6 +50,7 @@ const App = () => {
               type: "LOGGED_IN_USER",
               payload: {
                 name: res.data.name,
+                avatar: res.data.avatar,
                 email: res.data.email,
                 token: idTokenResult.token,
                 role: res.data.role,

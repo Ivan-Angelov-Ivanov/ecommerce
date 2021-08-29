@@ -75,6 +75,7 @@ const Login = ({ history }) => {
     auth
       .signInWithPopup(googleAuthProvider)
       .then(async (result) => {
+        console.log(result);
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
         createOrUpdateUser(idTokenResult.token)
@@ -83,6 +84,7 @@ const Login = ({ history }) => {
               type: "LOGGED_IN_USER",
               payload: {
                 name: res.data.name,
+                avatar: res.data.avatar,
                 email: res.data.email,
                 token: idTokenResult.token,
                 role: res.data.role,
