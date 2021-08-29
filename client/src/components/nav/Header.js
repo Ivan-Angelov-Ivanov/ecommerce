@@ -14,7 +14,7 @@ import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Search from "../forms/Search";
-import token from "../../images/token-image.png"
+import token from "../../images/token-image.png";
 
 const { SubMenu, Item } = Menu;
 
@@ -29,7 +29,7 @@ const Header = () => {
   const handleClick = (e) => {
     // console.log(e.key);
     setCurrent(e.key);
-    console.log(user)
+    console.log(user);
   };
 
   const logout = () => {
@@ -102,7 +102,9 @@ const Header = () => {
 
           <div className="float-right border-right border-left px-2 rounded">
             <img className="pr-2" alt="token" src={token} height="25px" />
-            <span className="b-1 font-weight-bold text-info" >{user.tokens}</span>
+            <span className="b-1 font-weight-bold text-info">
+              {user.tokens}
+            </span>
           </div>
         </>
       )}

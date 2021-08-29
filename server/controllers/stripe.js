@@ -7,7 +7,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 exports.createPaymentIntent = async (req, res) => {
   // console.log(req.body);
   // later apply coupon
-  const { couponApplied } = req.body;
+  const { couponApplied, tokensApplied } = req.body;
   // calculate price
   // 1. find the user
   const user = await User.findOne({ email: req.user.email }).exec();
@@ -19,7 +19,7 @@ exports.createPaymentIntent = async (req, res) => {
 
   let finalAmount = 0;
 
-  if (couponApplied && totalAfterDiscount) {
+  if ((couponApplied || tokensApplied) && totalAfterDiscount) {
     finalAmount = totalAfterDiscount * 100;
   } else {
     finalAmount = cartTotal * 100;

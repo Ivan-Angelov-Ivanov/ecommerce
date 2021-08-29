@@ -18,6 +18,7 @@ const {
   addToWishlist,
   removeFromWishlist,
   createCashOrder,
+  applyTokensToUserCart,
 } = require("../controllers/user");
 
 // routes
@@ -31,6 +32,9 @@ router.get("/user/orders", authCheck, orders);
 
 // coupon
 router.post("/user/cart/coupon", authCheck, applyCouponToUserCart);
+
+// tokens
+router.post("/user/cart/tokens", authCheck, applyTokensToUserCart);
 
 // wishlist
 router.post("/user/wishlist", authCheck, addToWishlist);

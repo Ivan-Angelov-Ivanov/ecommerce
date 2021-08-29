@@ -2,15 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ProductListItems = ({ product }) => {
-  const {
-    price,
-    category,
-    brand,
-    shipping,
-    color,
-    quantity,
-    sold,
-  } = product;
+  const { price, category, brand, shipping, color, quantity, sold } = product;
   return (
     <ul className="list-group">
       <li className="list-group-item">
@@ -33,13 +25,13 @@ const ProductListItems = ({ product }) => {
       {brand && (
         <li className="list-group-item">
           Brand{" "}
-            <Link
-              key={brand._id}
-              to={`/sub/${brand.slug}`}
-              className="label label-default label-pill pull-xs-right"
-            >
-              {brand.name}
-            </Link>
+          <Link
+            key={brand._id}
+            to={`/sub/${brand.slug}`}
+            className="label label-default label-pill pull-xs-right"
+          >
+            {brand.name}
+          </Link>
         </li>
       )}
       <li className="list-group-item">

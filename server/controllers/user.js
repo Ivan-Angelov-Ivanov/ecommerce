@@ -92,32 +92,68 @@ exports.applyCouponToUserCart = async (req, res) => {
 
   const user = await User.findOne({ email: req.user.email }).exec();
 
-  let { products, cartTotal } = await Cart.findOne({ orderedBy: user._id })
+  let { totalAfterDiscount, cartTotal } = await Cart.findOne({
+    orderedBy: user._id,
+  })
     .populate("products.product", "_id title price")
     .exec();
 
   console.log("Cart Total --->", cartTotal, "discount", validCoupon.discount);
 
   // calculate total after discount
-  let totalAfterDiscount = (
-    cartTotal -
+  let totalAfter = (
+    (totalAfterDiscount != undefined ? totalAfterDiscount : cartTotal) -
     (cartTotal * validCoupon.discount) / 100
   ).toFixed(2);
 
   Cart.findOneAndUpdate(
     { orderedBy: user._id },
-    { totalAfterDiscount },
+    { totalAfterDiscount: totalAfter },
     { new: true }
   ).exec();
 
-  res.json(totalAfterDiscount);
+  Coupon.findOneAndUpdate(
+    { name: coupon },
+    { applied: true },
+    { new: true }
+  ).exec();
+
+  res.json(totalAfter);
+};
+
+exports.applyTokensToUserCart = async (req, res) => {
+  const { tokens } = req.body;
+  console.log("Applied tokens", tokens);
+
+  const user = await User.findOne({ email: req.user.email }).exec();
+
+  let { appliedTokens, totalAfterDiscount, cartTotal } = await Cart.findOne({
+    orderedBy: user._id,
+  })
+    .populate("products.product", "_id title price")
+    .exec();
+
+  let totalAfter = (
+    (totalAfterDiscount != undefined ? totalAfterDiscount : cartTotal) -
+    tokens / 80
+  ).toFixed(2);
+
+  Cart.findOneAndUpdate(
+    { orderedBy: user._id },
+    { $set: { totalAfterDiscount: totalAfter, appliedTokens: tokens } },
+    { new: true }
+  ).exec();
+
+  res.json(totalAfter);
 };
 
 exports.createOrder = async (req, res) => {
   const { paymentIntent } = req.body.stripeResponse;
   const user = await User.findOne({ email: req.user.email }).exec();
 
-  let { products } = await Cart.findOne({ orderedBy: user._id }).exec();
+  let { appliedTokens, products } = await Cart.findOne({
+    orderedBy: user._id,
+  }).exec();
 
   let newOrder = await new Order({
     products,
@@ -125,9 +161,11 @@ exports.createOrder = async (req, res) => {
     orderedBy: user._id,
   }).save();
 
-  let tokens = Math.round((newOrder.paymentIntent.amount * 0.3) / 100) + user.tokens
+  let tokens = Math.round(
+    user.tokens - appliedTokens + (newOrder.paymentIntent.amount * 0.3) / 100
+  );
 
-  await User.findOneAndUpdate({email: req.user.email}, {tokens}).exec()
+  await User.findOneAndUpdate({ email: req.user.email }, { tokens }).exec();
 
   // decrement quantity, increment sold
   let bulkOption = products.map((item) => {

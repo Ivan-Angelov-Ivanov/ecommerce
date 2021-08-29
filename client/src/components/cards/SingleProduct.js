@@ -74,7 +74,13 @@ const SingleProduct = ({ product, onStarClick, star }) => {
           <Carousel showArrows={true} autoPlay infiniteLoop>
             {images &&
               images.map((image) => (
-                <img className="bg-white" alt={title} src={image.url} key={image.public_id} style={{objectFit: "contain"}} />
+                <img
+                  className="bg-white"
+                  alt={title}
+                  src={image.url}
+                  key={image.public_id}
+                  style={{ objectFit: "contain" }}
+                />
               ))}
           </Carousel>
         ) : (
@@ -84,7 +90,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         )}
 
         <Tabs type="card" defaultActiveKey="1">
-          <TabPane style={{whiteSpace: "pre-wrap"}} tab="Description" key="1">
+          <TabPane style={{ whiteSpace: "pre-wrap" }} tab="Description" key="1">
             {description && description}
           </TabPane>
           <TabPane tab="More" key="2">
@@ -103,9 +109,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         <Card
           actions={[
             <Tooltip title={tooltip}>
-              <a onClick={handleAddToCart}>
-                <ShoppingCartOutlined className="text-success" /> <br /> Add to
-                cart
+              <a disabled={product.quantity < 1} onClick={handleAddToCart}>
+                <ShoppingCartOutlined className="text-success" /> <br />
+                {product.quantity < 1 ? "Out of Stock" : "Add to cart"}
               </a>
             </Tooltip>,
             <a onClick={handleAddToWishlist}>

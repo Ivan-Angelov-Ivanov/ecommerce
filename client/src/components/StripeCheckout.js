@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 
 const StripeCheckout = ({ history }) => {
   const dispatch = useDispatch();
-  const { user, coupon } = useSelector((state) => ({ ...state }));
+  const { user, coupon, tokens } = useSelector((state) => ({ ...state }));
 
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -26,19 +26,19 @@ const StripeCheckout = ({ history }) => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const currentHistory = useHistory()
+  const currentHistory = useHistory();
 
   useEffect(() => {
     console.log(coupon);
-    createPaymentIntent(user.token, coupon).then((res) => {
-      console.log(res.data)
+    createPaymentIntent(user.token, coupon, tokens).then((res) => {
+      console.log(res.data);
       setClientSecret(res.data.clientSecret);
       // additional response received on successful payment
       setCartTotal(res.data.cartTotal);
       setTotalAfterDiscount(res.data.totalAfterDiscount);
       setPayable(res.data.payable);
     });
-  }, [user.token, coupon]);
+  }, [user.token, coupon, tokens]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ const StripeCheckout = ({ history }) => {
     } else {
       // here you get result after successful payment
       // create order and save in database for admin to process
-      createOrder(payload, user.token).then((res) => {
+      createOrder(payload, user.token, tokens).then((res) => {
         if (res.data.ok) {
           // empty cart from local storage
           if (typeof window !== undefined) localStorage.removeItem("cart");
@@ -83,7 +83,7 @@ const StripeCheckout = ({ history }) => {
       setSucceeded(true);
       setTimeout(() => {
         currentHistory.push("/");
-        window.location.reload()
+        window.location.reload();
       }, 5000);
     }
   };
