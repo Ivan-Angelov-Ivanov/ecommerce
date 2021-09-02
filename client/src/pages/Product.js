@@ -3,6 +3,7 @@ import { getProduct, productStar, getRelated } from "../functions/product";
 import SingleProduct from "../components/cards/SingleProduct";
 import { useSelector } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
+import Comments from "../components/cards/Comments";
 
 const Product = ({ match }) => {
   const [product, setProduct] = useState("");
@@ -68,6 +69,16 @@ const Product = ({ match }) => {
         ) : (
           <div className="text-center col">No products found</div>
         )}
+      </div>
+      <div className="row">
+        <div className="col text-center pt-5 pb-5">
+          <hr />
+          <h4>Comments</h4>
+          <hr />
+        </div>
+      </div>
+      <div>
+        <Comments user={user} product={product} />
       </div>
     </div>
   );
