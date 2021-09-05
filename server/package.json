@@ -21,7 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.13",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.12",
     "slugify": "^1.4.6",
     "stripe": "^8.134.0",
     "uniqueid": "^1.0.0"

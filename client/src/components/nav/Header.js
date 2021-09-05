@@ -45,18 +45,27 @@ const Header = () => {
   };
 
   return (
-    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+    <Menu
+      className="bg-dark text-light"
+      onClick={handleClick}
+      selectedKeys={[current]}
+      mode="horizontal"
+    >
       <Item className="float-left" key="home" icon={<AppstoreOutlined />}>
-        <Link to="/">Home</Link>
+        <Link className="text-white" to="/">
+          Home
+        </Link>
       </Item>
 
       <Item className="float-left" key="shop" icon={<ShoppingOutlined />}>
-        <Link to="/shop">Shop</Link>
+        <Link className="text-white" to="/shop">
+          Shop
+        </Link>
       </Item>
 
       <Item className="float-left" key="cart" icon={<ShoppingCartOutlined />}>
         <Link to="/cart">
-          <Badge count={cart.length} offset={[9, 0]}>
+          <Badge className="text-white" count={cart.length} offset={[9, 0]}>
             Cart
           </Badge>
         </Link>
@@ -64,13 +73,17 @@ const Header = () => {
 
       {!user && (
         <Item key="register" icon={<UserAddOutlined />} className="float-right">
-          <Link to="/register">Register</Link>
+          <Link className="text-white" to="/register">
+            Register
+          </Link>
         </Item>
       )}
 
       {!user && (
         <Item key="login" icon={<UserOutlined />} className="float-right">
-          <Link to="/login">Login</Link>
+          <Link className="text-white" to="/login">
+            Login
+          </Link>
         </Item>
       )}
 
@@ -125,11 +138,17 @@ const Header = () => {
             </Item>
           </SubMenu>
 
-          <div className="float-right border-right border-left px-2 rounded">
+          <div className="float-right border-secondary border-right border-left px-2 rounded">
             <img className="pr-2" alt="token" src={token} height="25px" />
-            <span className="b-1 font-weight-bold text-info">
-              {user.tokens}
-            </span>
+            {user.tokens > 0 ? (
+              <span className="b-1 font-weight-bold text-success">
+                {user.tokens}
+              </span>
+            ) : (
+              <span className="b-1 font-weight-bold text-danger">
+                {user.tokens}
+              </span>
+            )}
           </div>
         </>
       )}

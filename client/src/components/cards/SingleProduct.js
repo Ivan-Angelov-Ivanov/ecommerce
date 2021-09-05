@@ -99,7 +99,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         </Tabs>
       </div>
 
-      <div className="card p-3 m-4 col-md-5">
+      <div className="card p-3 m-4 col-md-5 bg-light">
         <h1 className="bg-info p-3 rounded-top">{title}</h1>
         {product && product.ratings && product.ratings.length > 0 ? (
           showAverage(product)
