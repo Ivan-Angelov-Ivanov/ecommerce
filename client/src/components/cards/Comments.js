@@ -32,7 +32,9 @@ const Comments = ({ user, product }) => {
   const loadComments = () => {
     getComments().then((res) => {
       setComments(res.data);
-      console.log(res.data);
+      comments.map((comment) => {
+        console.log(comment.product);
+      });
     });
   };
 
@@ -90,8 +92,10 @@ const Comments = ({ user, product }) => {
   const showComments = (comments, areSubComments) =>
     comments
       .filter((comment) => {
-        if (areSubComments) return comment.isSubComment;
-        else return !comment.isSubComment;
+        if (areSubComments)
+          return comment.isSubComment && comment.product._id === product._id;
+        else
+          return !comment.isSubComment && comment.product._id === product._id;
       })
       .map((comment) => (
         <>

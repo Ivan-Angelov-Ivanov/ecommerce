@@ -31,8 +31,6 @@ const Header = () => {
   const handleClick = (e) => {
     // console.log(e.key);
     setCurrent(e.key);
-    console.log(user.avatar);
-    console.log(defaultPfp);
   };
 
   const logout = () => {
@@ -114,7 +112,7 @@ const Header = () => {
                 </span>
               )
             }
-            className="float-right ml-2"
+            className="float-right mr-4"
           >
             {user && user.role === "subscriber" && (
               <Item>
