@@ -104,7 +104,7 @@ const Comments = ({ user, product }) => {
               <Tooltip key="comment-basic-like" title="Like">
                 <span onClick={() => handleLikes(comment)}>
                   {createElement(
-                    comment.usersWhoLike.includes(user._id)
+                    comment.usersWhoLike.includes(user != null ? user._id : "")
                       ? LikeFilled
                       : LikeOutlined
                   )}
@@ -114,7 +114,9 @@ const Comments = ({ user, product }) => {
               <Tooltip key="comment-basic-dislike" title="Dislike">
                 <span onClick={() => handleDislikes(comment)}>
                   {createElement(
-                    comment.usersWhoDislike.includes(user._id)
+                    comment.usersWhoDislike.includes(
+                      user != null ? user._id : ""
+                    )
                       ? DislikeFilled
                       : DislikeOutlined
                   )}

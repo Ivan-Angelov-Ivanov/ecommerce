@@ -62,6 +62,7 @@ const App = () => {
           .catch((err) => console.log(err));
       }
     });
+    document.title = "E-commerce";
 
     return () => {
       unsubscribe();

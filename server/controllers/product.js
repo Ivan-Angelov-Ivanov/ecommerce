@@ -65,24 +65,6 @@ exports.update = async (req, res) => {
   }
 };
 
-// Without pagination
-// exports.list = async (req, res) => {
-//   try {
-//     // createdAt/updatedAt, desc/asc, limit
-//     const { sort, order, limit } = req.body;
-//     const products = await Product.find({})
-//       .populate("category")
-//       .populate("subs")
-//       .sort([[sort, order]])
-//       .limit(limit)
-//       .exec();
-
-//     res.json(products);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
 // With pagination
 exports.list = async (req, res) => {
   try {
@@ -246,7 +228,6 @@ const handleStar = (req, res, stars) => {
     });
 };
 
-
 // filter by shipping
 const handleShipping = async (req, res, shipping) => {
   const products = await Product.find({ shipping })
@@ -268,7 +249,8 @@ const handleColor = async (req, res, color) => {
     .limit(12)
     .exec();
 
-  res.json(products);};
+  res.json(products);
+};
 
 // filter by brand
 const handleBrand = async (req, res, brand) => {
@@ -279,18 +261,11 @@ const handleBrand = async (req, res, brand) => {
     .limit(12)
     .exec();
 
-  res.json(products);};
+  res.json(products);
+};
 
 exports.searchFilters = async (req, res) => {
-  const {
-    query,
-    price,
-    category,
-    stars,
-    shipping,
-    color,
-    brand,
-  } = req.body;
+  const { query, price, category, stars, shipping, color, brand } = req.body;
 
   if (query) {
     console.log("Query", query);

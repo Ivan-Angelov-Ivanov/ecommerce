@@ -6,7 +6,6 @@ const Order = require("../models/order");
 const uniqueid = require("uniqueid");
 
 exports.userCart = async (req, res) => {
-  console.log(req.body); // {cart: []}
   const { cart } = req.body;
 
   let products = [];
@@ -47,7 +46,6 @@ exports.userCart = async (req, res) => {
     cartTotal,
     orderedBy: user._id,
   }).save();
-  console.log("new cart ----->", newCart);
   res.json({ ok: true });
 };
 
@@ -92,8 +90,6 @@ exports.applyCouponToUserCart = async (req, res) => {
       error: "Coupon is already expired",
     });
   }
-
-  console.log("Valid Coupon", validCoupon);
 
   const user = await User.findOne({ email: req.user.email }).exec();
 
@@ -183,9 +179,6 @@ exports.createOrder = async (req, res) => {
   });
 
   let updated = await Product.bulkWrite(bulkOption, {});
-  console.log("Product quantity--, sold++: ", updated);
-
-  console.log(newOrder);
   res.json({ ok: true });
 };
 
@@ -269,8 +262,5 @@ exports.createCashOrder = async (req, res) => {
   });
 
   let updated = await Product.bulkWrite(bulkOption, {});
-  console.log("Product quantity--, sold++: ", updated);
-
-  console.log(newOrder);
   res.json({ ok: true });
 };

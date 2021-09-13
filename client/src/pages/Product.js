@@ -11,7 +11,7 @@ const Product = ({ match }) => {
   const [related, setRelated] = useState([]);
 
   const { slug } = match.params;
-  // redux
+
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
@@ -30,7 +30,6 @@ const Product = ({ match }) => {
   const loadSingleProduct = () => {
     getProduct(slug).then((res) => {
       setProduct(res.data);
-      // load related
       getRelated(res.data._id).then((res) => setRelated(res.data));
     });
   };
@@ -38,8 +37,7 @@ const Product = ({ match }) => {
   const onStarClick = (newRating, name) => {
     setStar(newRating);
     productStar(name, newRating, user.token).then((res) => {
-      console.log(res.data);
-      loadSingleProduct(); // if you want to show updated rating in real time
+      loadSingleProduct();
     });
   };
 
