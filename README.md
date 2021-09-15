@@ -7,7 +7,7 @@ Tools and Software used:
 ------------------------
 -   VSCode
 -   Hyper
--   Robo 3T
+-   MongoDBCompass
 -   Stripe
 -   Firebase
 -   Cloudinary
